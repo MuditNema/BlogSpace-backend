@@ -46,17 +46,50 @@ router.post('/addblog',[
     }
 })
 
-
-router.delete('/deleteblog/:id',fetchUser,async (req,res)=>{
+router.put('/updateblog/:id',fetchUser,async (req,res,next)=>{
     try {
+        //getting the blog ,if it exists
         const blog = await Blog.findById(req.params.id);
         if(!blog){
             return res.send({error : "No Blog Found"});
         }
+        //deleting the blog from mongoDB
+        const result = await Blog.findByIdAndUpdate(req.params.id,{$set:{title:req.body.title,content:req.body.content}},{new:true});
+        res.send(result);
+    } catch (error) {
+        res.send({error : "Error Updating blog \n" +  error});
+    }
+})
+
+router.delete('/deleteblog/:id',fetchUser,async (req,res,next)=>{
+    try {
+        //getting the blog ,if it exists
+        const blog = await Blog.findById(req.params.id);
+        if(!blog){
+            return res.send({error : "No Blog Found"});
+        }
+        //deleting the blog from mongoDB
         const result = await Blog.findByIdAndDelete(req.params.id);
         res.send(result);
     } catch (error) {
         res.send({error : "Error Deleting blog \n" +  error});
     }
 })
+
+router.delete('/deleteallblogs',fetchUser,async (req,res,next)=>{
+    try {
+        //getting all the blogs via the userId in an array
+        const blogs = await Blog.find({user : req.UserData.id});
+        if(!blogs){
+            return res.send({error : "User has 0 Blogs currently"});
+        }
+        const result = await Blog.deleteMany({user : req.UserData.id});
+        //deleting the blog from mongoDB
+        // const result = await Blog.findByIdAndDelete(req.params.id);
+        res.send(result);
+    } catch (error) {
+        res.send({error : "Error Deleting blogs " +  error});
+    }
+})
+
 module.exports = router
