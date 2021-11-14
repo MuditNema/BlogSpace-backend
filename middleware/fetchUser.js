@@ -15,3 +15,6 @@ const fetchUser = async (req,res,next) => {
         res.send({error});
     }
 }
+
+
+module.exports = fetchUser;

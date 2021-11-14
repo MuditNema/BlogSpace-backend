@@ -10,14 +10,7 @@ app.use(cors())
 app.use(express.json())
 
 app.use('/user',require('./Routes/user'));
-// app.use('/blog',require('./Routes/blog'));
-
-
-
-
-
-
-
+app.use('/blog',require('./Routes/blog'));
 
 
 app.listen(port, () => {
