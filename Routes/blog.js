@@ -18,6 +18,16 @@ router.get('/fetchblogs',fetchUser,async (req,res,next)=>{
     }
 })
 
+router.get('/fetchAllblogs',fetchUser,async (req,res,next)=>{
+    try {
+        //Recieving all the blogs (for a particular user) as an array from our mongoDB
+        const blogs = await Blog.find();
+        res.send(blogs);
+    } catch (error) {
+        res.send({error : "Error Fetching blogs \n" +  error});
+    }
+})
+
 router.post('/addblog',[
     body('title').isLength({min:5}),
     body('content').isLength({min:10})
