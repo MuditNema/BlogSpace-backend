@@ -18,13 +18,13 @@ router.get('/fetchblogs',fetchUser,async (req,res,next)=>{
     }
 })
 
-router.get('/fetchAllblogs',fetchUser,async (req,res,next)=>{
+router.get('/fetchAllblogs',async (req,res,next)=>{
     try {
         //Recieving all the blogs (for a particular user) as an array from our mongoDB
         let blogs = await Blog.find();
-        blogs = blogs.filter((element) => {
-            return !(element.user === req.UserData.id)
-        })
+        // blogs = blogs.filter((element) => {
+        //     return !(element.user === req.UserData.id)
+        // })
         res.send(blogs);
     } catch (error) {
         res.send({error : "Error Fetching blogs \n" +  error});
