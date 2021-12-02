@@ -83,7 +83,7 @@ router.delete('/deleteblog/:id',fetchUser,async (req,res,next)=>{
         }
         //deleting the blog from mongoDB
         const result = await Blog.findByIdAndDelete(req.params.id);
-        res.send(result);
+        res.send({result});
     } catch (error) {
         res.send({error : "Error Deleting blog \n" +  error});
     }
