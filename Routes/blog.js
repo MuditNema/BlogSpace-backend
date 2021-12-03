@@ -53,9 +53,9 @@ router.post('/addblog',[
         }
         const AddBlog = await Blog(BlogObj);
         const AddedBlog = await AddBlog.save();
-        return res.send(AddedBlog);
+        return res.send({AddedBlog});
     } catch (error) {
-        res.send({error : "Error Adding blog \n" +  error});
+        res.send({error : "Error Adding blog   " +  error});
     }
 })
 
@@ -93,13 +93,15 @@ router.delete('/deleteallblogs',fetchUser,async (req,res,next)=>{
     try {
         //getting all the blogs via the userId in an array
         const blogs = await Blog.find({user : req.UserData.id});
+        console.log(blogs);
         if(!blogs){
             return res.send({error : "User has 0 Blogs currently"});
         }
         const result = await Blog.deleteMany({user : req.UserData.id});
+        console.log(result);
         //deleting the blog from mongoDB
         // const result = await Blog.findByIdAndDelete(req.params.id);
-        res.send(result);
+        res.send({result});
     } catch (error) {
         res.send({error : "Error Deleting blogs " +  error});
     }
