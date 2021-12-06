@@ -5,7 +5,7 @@ const router = express.Router();
 const User = require('../Database/models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const JWT_SECRET = 'fs9f@#G6Ry+6TEmmgJD!FrEc*T4pqhD5EJz.25SQUJgAg';
+const JWT_SECRET = process.env.JW_TOKEN;
 app.use(express.json())
 
 
